@@ -15,6 +15,7 @@ class KKB {
             await fn(ctx)
             // this.callback(req,res)
             // this.callback(ctx)
+            // 响应
             res.end(ctx.body)
         })
         server.listen(...args)
@@ -25,6 +26,7 @@ class KKB {
     use(middleware){
         this.middlewares.push(middleware)
     }
+    // 构建上下文
     createContext(req, res) {
         const ctx = Object.create(context)
         ctx.request = Object.create(request)

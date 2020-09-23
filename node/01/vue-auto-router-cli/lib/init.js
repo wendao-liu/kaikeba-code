@@ -33,7 +33,7 @@ module.exports = async name => {
     // 克隆代码
     await clone('github:su37josephxia/vue-template', name)
     log('安装依赖')
-    await spawn('npm', ['install'], { cwd: `./${name}` })
+    await spawn('cnpm', ['install'], { cwd: `./${name}` })
     log(`
 👌安装完成：
 To get Start:

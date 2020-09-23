@@ -1,6 +1,6 @@
 {
   "name": "vue-auto-router-cli",
-  "version": "1.0.19",
+  "version": "1.0.30",
   "description": "",
   "main": "index.js",
   "bin": {

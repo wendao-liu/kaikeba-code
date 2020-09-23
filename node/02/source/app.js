@@ -5,41 +5,52 @@ const app = new KKB()
 //     res.writeHead(200)
 //     res.end('hi kaikeba')
 // })
-// const delay = () => Promise.resolve(resolve => setTimeout(() => resolve(), 2000));
+const delay = () => Promise.resolve(resolve => setTimeout(() => resolve(), 2000));
 
 
-// app.use(async (ctx, next) => {
-//     ctx.body = "1";
-//     setTimeout(() => {
-//         ctx.body += "2";
-//     }, 2000);
-//     await next();
-//     ctx.body += "3";
-// });
+app.use(async (ctx, next) => {
+  ctx.body = "1";
+  // await new Promise(resolve => {
+  //   setTimeout(() => {
+  //     console.log(6666)
+  //     resolve(ctx.body += "2")
+  //   }, 2000);
+  // })
+  console.log(1)
 
-// app.use(async (ctx, next) => {
-//     ctx.body += "4";
-//     await delay();
-//     await next();
-//     ctx.body += "5";
-// });
+  await setTimeout(() => {
+    console.log(6666)
+    ctx.body += "2";
+  }, 2000);
+  console.log(2)
+  await next();
+  ctx.body += "3";
+});
 
-// app.use(async (ctx, next) => {
-//     ctx.body += "6";
-// });
+app.use(async (ctx, next) => {
+  console.log(3)
+  ctx.body += "4";
+  await delay();
+  await next();
+  ctx.body += "5";
+});
 
-const static = require('./static')
-app.use(static(__dirname + '/public'));
+app.use(async (ctx, next) => {
+  ctx.body += "6";
+});
 
-const Router = require('./router')
-const router = new Router()
+// const static = require('./static')
+// app.use(static(__dirname + '/public'));
 
-router.get('/index', async ctx => { ctx.body = 'index page'; });
-router.get('/post', async ctx => { ctx.body = 'post page'; });
-router.get('/list', async ctx => { ctx.body = 'list page'; });
-router.post('/index', async ctx => { ctx.body = 'post page'; });
+// const Router = require('./router')
+// const router = new Router()
 
-// 路由实例输出父中间件 router.routes()
-app.use(router.routes());
+// router.get('/index', async ctx => { ctx.body = 'index page'; });
+// router.get('/post', async ctx => { ctx.body = 'post page'; });
+// router.get('/list', async ctx => { ctx.body = 'list page'; });
+// router.post('/index', async ctx => { ctx.body = 'post page'; });
+
+// // 路由实例输出父中间件 router.routes()
+// app.use(router.routes());
 
 app.listen(3000)

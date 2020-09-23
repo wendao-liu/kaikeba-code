@@ -20,7 +20,7 @@
 
 
 function compose(middlewares){
-    return function(){
+    return function(ctx){
         return dispatch(0)
         function dispatch(i){
             let fn = middlewares[i]
@@ -28,7 +28,7 @@ function compose(middlewares){
                 return Promise.resolve()
             }
             return Promise.resolve(
-                fn(function next(){
+                fn(ctx,function next(){
                     return dispatch(i + 1)
                 })
             )
@@ -36,21 +36,22 @@ function compose(middlewares){
     }
 }
 
-async function fn1(next){
-    console.log('fn1')
+// fn1666 fn2666 fn3666 退回来 end fn2  end fn1
+async function fn1(ctx,next){
+    console.log('fn1',ctx)
     await next()
     console.log('end fn1')
 }
 
-async function fn2(next){
-    console.log('fn2')
+async function fn2(ctx,next){
+    console.log('fn2',ctx)
     await delay()
     await next()
     console.log('end fn2')
 }
 
-function fn3(next){
-    console.log('fn3')
+function fn3(ctx,next){
+    console.log('fn3',ctx)
 }
 
 function delay(){
@@ -61,4 +62,5 @@ function delay(){
 
 const middlewares = [fn1,fn2,fn3]
 const finalFn = compose(middlewares)
-finalFn()
+let ctx = 666;
+finalFn(ctx)
