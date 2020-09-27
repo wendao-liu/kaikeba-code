@@ -14,7 +14,7 @@ window.onload=function(){
             if (!_files.length) return;
             if (_files.length === 1) { // 选择单个文件
                 var xhr = new XMLHttpRequest();
-                xhr.open('POST', 'http://localhost:3000/upload');
+                xhr.open('POST', 'http://localhost:3002/upload');
                 var filePath = files[0].value;
                 xhr.setRequestHeader('file-name', filePath.substring(filePath.lastIndexOf('\\') + 1));
                 xhr.send(_files[0]);

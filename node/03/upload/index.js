@@ -12,6 +12,7 @@ const server = http.createServer((request, response) => {
         const outputFile = path.resolve(__dirname, fileName)
         const fis = fs.createWriteStream(outputFile)
 
+        // 方法一， 文件过大，buffer占用内存过多不利于并发
         // Buffer connect
         // request.on('data',data => {
         //     chunk.push(data)
@@ -26,19 +27,20 @@ const server = http.createServer((request, response) => {
         //     response.end()
         // })
 
+        // 方法二，内存缓存中只有一点点的片段，可以屏蔽上面的问题
         // 流事件写入
-        // request.on('data', data => {
-        //     console.log('data:',data)
-        //     fis.write(data)
-        // })
-        // request.on('end', () => {
-        //     fis.end()
-        //     response.end()
-        // })
+        request.on('data', data => {
+            console.log('data:',data)
+            fis.write(data)  // 方法完成之后直接写入流里面
+        })
+        request.on('end', () => {
+            fis.end()
+            response.end()
+        })
 
 
-        request.pipe(fis)
-        response.end()
+        // request.pipe(fis)
+        // response.end()
 
     } else {
         const filename = pathname === '/' ? 'index.html' : pathname.substring(1)
@@ -67,4 +69,4 @@ const server = http.createServer((request, response) => {
         })
     }
 })
-server.listen(3000)
+server.listen(3002)

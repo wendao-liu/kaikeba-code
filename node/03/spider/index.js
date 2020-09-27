@@ -1,7 +1,6 @@
 const originRequest = require("request");
 const cheerio = require("cheerio");
 const iconv = require("iconv-lite");
-
 function request(url, callback) {
     const options = {
         url: url,
