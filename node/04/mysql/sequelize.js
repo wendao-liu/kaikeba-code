@@ -47,18 +47,18 @@
             }
         });
 
-    Fruit.classify = function (name) {
-        const tropicFruits = ['香蕉', '芒果', '椰子']; // 热带水果
-        return tropicFruits.includes(name) ? '热带水果' : '其他水果';
-    };
-    Fruit.prototype.totalPrice = function (count) {
-        return (this.price * count).toFixed(2);
-    };
+    // Fruit.classify = function (name) {
+    //     const tropicFruits = ['香蕉', '芒果', '椰子']; // 热带水果
+    //     return tropicFruits.includes(name) ? '热带水果' : '其他水果';
+    // };
+    // Fruit.prototype.totalPrice = function (count) {
+    //     return (this.price * count).toFixed(2);
+    // };
 
-    ['香蕉', '草莓'].forEach(f => console.log(f + '是' + Fruit.classify(f)));
+    // ['香蕉', '草莓'].forEach(f => console.log(f + '是' + Fruit.classify(f)));
 
     // 同步数据库，force: true则会删除已存在表
-    let ret = await Fruit.sync({ force: false })
+    // let ret = await Fruit.sync({ force: false })
     // console.log('sync', ret)
     ret = await Fruit.create({
         name: "香蕉",
@@ -98,14 +98,14 @@
     // })
     // console.log('ret:', JSON.stringify(ret))
 
-    const Op = Sequelize.Op;
-    Fruit.findAll({
-        // where: { price: { [Op.lt]:4 }, stock: { [Op.gte]: 100 } }
-        where: { id: { [Op.lt]: 4, [Op.gt]: 2 } }
-    }).then(fruits => {
-        console.log(JSON.stringify(fruits))
-        console.log(fruits.length);
-    });
+    // const Op = Sequelize.Op;
+    // Fruit.findAll({
+    //     // where: { price: { [Op.lt]:4 }, stock: { [Op.gte]: 100 } }
+    //     where: { id: { [Op.lt]: 4, [Op.gt]: 2 } }
+    // }).then(fruits => {
+    //     console.log(JSON.stringify(fruits))
+    //     console.log(fruits.length);
+    // });
 
     // Fruit.destroy({ where: { id: 1 } }).then(r => console.log(r));
 })()
